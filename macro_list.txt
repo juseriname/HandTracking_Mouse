@@ -1,2 +1,4 @@
 False,False,False,False,'Click!'
-False,False,True,True,'Yeah!'
+False,False,False,True,'Down!'
+True,False,False,False,'Up!'
+False,False,True,True,'Rlick!'
