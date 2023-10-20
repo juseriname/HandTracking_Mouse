@@ -6,7 +6,6 @@
 
 #실행전 readme.txt 읽어보면 좋음!!
 
-from tkinter.tix import Tree
 import cv2
 import mediapipe as mp
 import math
@@ -15,6 +14,7 @@ import time
 import os
 
 cap = cv2.VideoCapture(0)
+pg.FAILSAFE = False
 
 mpHands = mp.solutions.hands
 my_hands = mpHands.Hands()
@@ -66,37 +66,39 @@ try:
                             cv2.putText(img,gesture[i][4],(round(text_x) - 50,round(text_y) - 250),cv2.FONT_HERSHEY_PLAIN,4,(0,0,0),4)
                             if gesture[i][4] == "'Click!'":
                                 pg.click()
-                                time.sleep(1)
-                            if gesture[i][4] == "'Rlick!'":
-                                pg.rightClick()
-                                time.sleep(1)
-                            if gesture[i][4] == "'Down!'":
-                                pg.scroll(-200)
-                                time.sleep(0.1)
-                            if gesture[i][4] == "'Up!'":
-                                pg.scroll(200)
-                                time.sleep(0.1)
+                                time.sleep(0.3)
+                            #if gesture[i][4] == "'Rlick!'":
+                            #    pg.rightClick()
+                            #    time.sleep(0.3)
+                            #if gesture[i][4] == "'Down!'":
+                            #    pg.scroll(-200)
+                            #    time.sleep(0.1)
+                            #if gesture[i][4] == "'Up!'":
+                            #    pg.scroll(200)
+                            #    time.sleep(0.1)
                     mpDraw.draw_landmarks(img,handLms,mpHands.HAND_CONNECTIONS) #현재 카메라에 인식된 손 모양 보여주기(없어도 됨)
                     #이 밑은 마우스 코드
                     hx1,hx2,hx3,hx4,hx5 = handLms.landmark[0].x,handLms.landmark[17].x,handLms.landmark[13].x,handLms.landmark[9].x,handLms.landmark[5].x
                     hy1,hy2,hy3,hy4,hy5 = handLms.landmark[0].y,handLms.landmark[17].y,handLms.landmark[13].y,handLms.landmark[9].y,handLms.landmark[5].y
-                    pointx = ((hx1+hx2+hx3+hx4+hx5)/5)*(umx+400) # 현재 화면 크기보다 넉넉하게 잡아주기
-                    pointy = ((hy1+hy2+hy3+hy4+hy5)/5)*(umy+400)
+                    pointx = ((hx1+hx2+hx3+hx4+hx5)/5)*(umx+300) # 현재 화면 크기보다 넉넉하게 잡아주기(삭제됨)
+                    pointy = ((hy1+hy2+hy3+hy4+hy5)/5)*(umy+300)
+
                     #보정단위 7픽셀
-                    if abs(pointax[-1]-pointx) <= 7:
+                    if abs(pointax[-1]-pointx) <= 4:
                         pointx = pointax[-1]
-                    if abs(pointay[-1]-pointy) <= 7:
+                    if abs(pointay[-1]-pointy) <= 4:
                         pointy = pointay[-1]
                     pointax.append(pointx)
                     pointay.append(pointy)
+                    
                     pg.moveTo(pointx,pointy,0.05)
                     #여기까지
 
             cv2.imshow("HandTracking Mouse",img) # 현재 카메라에 찍히는 모습 보여주기(없어도 됨)
             cv2.waitKey(1)
             #time.sleep(0.15)
-except:
-    pass 
+except Exception as ex:
+    print('error!! : ',ex)
 
 # 참고 자료:
 # https://developeralice.tistory.com/10
