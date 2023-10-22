@@ -38,6 +38,7 @@ try:
         umx,umy=pg.size() # 사용자의 화면 크기 측정
         pointax = [0]
         pointay = [0]
+        mouse_on = 1
 
         while 1:
             success,limg = cap.read()
@@ -76,22 +77,33 @@ try:
                             #if gesture[i][4] == "'Up!'":
                             #    pg.scroll(200)
                             #    time.sleep(0.1)
+                            if gesture[i][4] == "'turn!'":
+                                print('now')
+                                if(mouse_on) :
+                                    mouse_on = 0
+                                    print('turn off')
+                                    time.sleep(1)
+                                else :
+                                    mouse_on = 1
+                                    print('turn on')
+                                    time.sleep(1)
                     mpDraw.draw_landmarks(img,handLms,mpHands.HAND_CONNECTIONS) #현재 카메라에 인식된 손 모양 보여주기(없어도 됨)
                     #이 밑은 마우스 코드
-                    hx1,hx2,hx3,hx4,hx5 = handLms.landmark[0].x,handLms.landmark[17].x,handLms.landmark[13].x,handLms.landmark[9].x,handLms.landmark[5].x
-                    hy1,hy2,hy3,hy4,hy5 = handLms.landmark[0].y,handLms.landmark[17].y,handLms.landmark[13].y,handLms.landmark[9].y,handLms.landmark[5].y
-                    pointx = ((hx1+hx2+hx3+hx4+hx5)/5)*(umx+300) # 현재 화면 크기보다 넉넉하게 잡아주기
-                    pointy = ((hy1+hy2+hy3+hy4+hy5)/5)*(umy+300)
+                    if(mouse_on) :
+                        hx1,hx2,hx3,hx4,hx5 = handLms.landmark[0].x,handLms.landmark[17].x,handLms.landmark[13].x,handLms.landmark[9].x,handLms.landmark[5].x
+                        hy1,hy2,hy3,hy4,hy5 = handLms.landmark[0].y,handLms.landmark[17].y,handLms.landmark[13].y,handLms.landmark[9].y,handLms.landmark[5].y
+                        pointx = ((hx1+hx2+hx3+hx4+hx5)/5)*(umx+300) # 현재 화면 크기보다 넉넉하게 잡아주기
+                        pointy = ((hy1+hy2+hy3+hy4+hy5)/5)*(umy+300)
 
-                    #보정단위 7픽셀
-                    if abs(pointax[-1]-pointx) <= 4:
-                        pointx = pointax[-1]
-                    if abs(pointay[-1]-pointy) <= 4:
-                        pointy = pointay[-1]
-                    pointax.append(pointx)
-                    pointay.append(pointy)
-                    
-                    pg.moveTo(pointx,pointy,0.05)
+                        #보정단위 7픽셀
+                        if abs(pointax[-1]-pointx) <= 4:
+                            pointx = pointax[-1]
+                        if abs(pointay[-1]-pointy) <= 4:
+                            pointy = pointay[-1]
+                        pointax.append(pointx)
+                        pointay.append(pointy)
+                        
+                        pg.moveTo(pointx,pointy,0.05)
                     #여기까지
 
             cv2.imshow("HandTracking Mouse",img) # 현재 카메라에 찍히는 모습 보여주기(없어도 됨)
