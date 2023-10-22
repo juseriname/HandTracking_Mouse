@@ -80,7 +80,7 @@ try:
                     #이 밑은 마우스 코드
                     hx1,hx2,hx3,hx4,hx5 = handLms.landmark[0].x,handLms.landmark[17].x,handLms.landmark[13].x,handLms.landmark[9].x,handLms.landmark[5].x
                     hy1,hy2,hy3,hy4,hy5 = handLms.landmark[0].y,handLms.landmark[17].y,handLms.landmark[13].y,handLms.landmark[9].y,handLms.landmark[5].y
-                    pointx = ((hx1+hx2+hx3+hx4+hx5)/5)*(umx+300) # 현재 화면 크기보다 넉넉하게 잡아주기(삭제됨)
+                    pointx = ((hx1+hx2+hx3+hx4+hx5)/5)*(umx+300) # 현재 화면 크기보다 넉넉하게 잡아주기
                     pointy = ((hy1+hy2+hy3+hy4+hy5)/5)*(umy+300)
 
                     #보정단위 7픽셀
