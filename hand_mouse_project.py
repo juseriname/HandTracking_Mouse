@@ -38,6 +38,7 @@ try:
         umx,umy=pg.size() # 사용자의 화면 크기 측정
         pointax = [0]
         pointay = [0]
+        is_clicked = [0]
         mouse_on = 1
 
         while 1:
@@ -52,6 +53,11 @@ try:
                     del pointay[0:]
                     pointax.append(0)
                     pointay.append(0)
+
+                if len(is_clicked) >= 40 :
+                    temp = is_clicked[-1]
+                    del is_clicked[0:]
+                    is_clicked.append(temp)
                 for handLms in results.multi_hand_landmarks:
                     for i in range(0,4):
                         fopen[i] = dist(handLms.landmark[0].x,handLms.landmark[0].y,handLms.landmark[compareIndex[i][0]].x,handLms.landmark[compareIndex[i][0]].y) < dist(handLms.landmark[0].x,handLms.landmark[0].y,handLms.landmark[compareIndex[i][1]].x,handLms.landmark[compareIndex[i][1]].y)
@@ -65,9 +71,12 @@ try:
                                 flag = False
                         if flag == True:
                             cv2.putText(img,gesture[i][4],(round(text_x) - 50,round(text_y) - 250),cv2.FONT_HERSHEY_PLAIN,4,(0,0,0),4)
-                            if gesture[i][4] == "'Click!'":
+                            if gesture[i][4] == "'Click!'" and is_clicked[-1]==0:
                                 pg.click()
+                                is_clicked.append(1)
                                 time.sleep(0.3)
+                            if gesture[i][4] == "'all!'":
+                                is_clicked.append(0)
                             #if gesture[i][4] == "'Rlick!'":
                             #    pg.rightClick()
                             #    time.sleep(0.3)
@@ -82,11 +91,14 @@ try:
                                 if(mouse_on) :
                                     mouse_on = 0
                                     print('turn off')
+                                    is_clicked.append(0)
                                     time.sleep(1)
                                 else :
                                     mouse_on = 1
                                     print('turn on')
+                                    is_clicked.append(0)
                                     time.sleep(1)
+                            print(is_clicked)
                     mpDraw.draw_landmarks(img,handLms,mpHands.HAND_CONNECTIONS) #현재 카메라에 인식된 손 모양 보여주기(없어도 됨)
                     #이 밑은 마우스 코드
                     if(mouse_on) :
