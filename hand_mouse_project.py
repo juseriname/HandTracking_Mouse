@@ -108,9 +108,9 @@ try:
                         pointy = ((hy1+hy2+hy3+hy4+hy5)/5)*(umy+300)
 
                         #보정단위 7픽셀
-                        if abs(pointax[-1]-pointx) <= 4:
+                        if abs(pointax[-1]-pointx) <= 7:
                             pointx = pointax[-1]
-                        if abs(pointay[-1]-pointy) <= 4:
+                        if abs(pointay[-1]-pointy) <= 7:
                             pointy = pointay[-1]
                         pointax.append(pointx)
                         pointay.append(pointy)
