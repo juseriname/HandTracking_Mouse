@@ -98,7 +98,8 @@ try:
                                     print('turn on')
                                     is_clicked.append(0)
                                     time.sleep(1)
-                            print(is_clicked)
+                            if(is_clicked[-1] == 1):
+                                print('now click!')
                     mpDraw.draw_landmarks(img,handLms,mpHands.HAND_CONNECTIONS) #현재 카메라에 인식된 손 모양 보여주기(없어도 됨)
                     #이 밑은 마우스 코드
                     if(mouse_on) :
@@ -118,7 +119,9 @@ try:
                         pg.moveTo(pointx,pointy,0.05)
                     #여기까지
 
-            cv2.imshow("HandTracking Mouse",img) # 현재 카메라에 찍히는 모습 보여주기(없어도 됨)
+            
+            resize_img = cv2.resize(img,(440,330)) #나오는 화면 크기 줄이기
+            cv2.imshow("HandTracking Mouse",resize_img) # 현재 카메라에 찍히는 모습 보여주기(없어도 됨)
             cv2.waitKey(1)
             #time.sleep(0.15)
 except Exception as ex:
