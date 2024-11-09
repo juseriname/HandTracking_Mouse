@@ -105,9 +105,9 @@ try:
                     if(mouse_on) :
                         hx1,hx2,hx3,hx4,hx5 = handLms.landmark[0].x,handLms.landmark[17].x,handLms.landmark[13].x,handLms.landmark[9].x,handLms.landmark[5].x
                         hy1,hy2,hy3,hy4,hy5 = handLms.landmark[0].y,handLms.landmark[17].y,handLms.landmark[13].y,handLms.landmark[9].y,handLms.landmark[5].y
-                        pointx = ((hx1+hx2+hx3+hx4+hx5)/5)*(umx+300) # 현재 화면 크기보다 넉넉하게 잡아주기
-                        pointy = ((hy1+hy2+hy3+hy4+hy5)/5)*(umy+300)
-
+                        pointx = (((((hx1+hx2+hx3+hx4+hx5)/5)-(0.5))*1.2)+0.5)*(umx*1.2) # 현재 화면 크기보다 넉넉하게 잡아주기
+                        pointy = (((((hy1+hy2+hy3+hy4+hy5)/5)-(0.5))*1.2)+0.5)*(umy*1.3)
+                        
                         #보정단위 7픽셀
                         if abs(pointax[-1]-pointx) <= 7:
                             pointx = pointax[-1]
